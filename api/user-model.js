@@ -1,39 +1,39 @@
 const shortid = require('shortid')
 
-let users = [
+let userList = [
     { id: shortid.generate(), name: 'Juan', bio: 'A Lambda student.'}
 ]
 
 module.exports = {
     findAll() {
-        return Promise.resolve(users)
+        return Promise.resolve(userList)
     },
 
     findById(id) {
-        const users = users.find(u => u.id === id)
+        const users = userList.find(u => u.id === id)
         return Promise.resolve(users)
     },
 
-    create({name, weight}) {
+    create({name, bio}) {
         const newUser = { id: shortid.generate(), name, bio}
-        users.push(newUser)
+        userList.push(newUser)
         return Promise.resolve(newUser)
     },
 
-    update(id, changes) {
-        const user = users.find(user => user.id === id)
+    update(id, updates) {
+        const user = userList.find(user => user.id === id)
         if (!user) return Promise.resolve(null)
 
-        const updatedUser = {...changes, id}
-        users = users.map(u => (u.id === id) ? updatedUser : u)
+        const updatedUser = {...updates, id}
+        userList = userList.map(u => (u.id === id) ? updatedUser : u)
         return Promise.resolve(updatedUser)
     },
 
     delete(id) {
-        const user = users.find(user => user.id === id)
+        const user = userList.find(user => user.id === id)
         if (!user) return Promise.resolve(null)
 
-        users = users.filter(u => u.id !== id)
+        userList = userList.filter(u => u.id !== id)
         return Promise.resolve(user)
     }
 }
